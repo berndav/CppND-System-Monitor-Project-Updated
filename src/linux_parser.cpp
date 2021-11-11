@@ -201,8 +201,9 @@ int LinuxParser::RunningProcesses() {
   return -1;  // error
 }
 
-// Refactor parsing of the "[pid]/status" file
-std::string LinuxParser::pidStatusParser(int pid, std::string _key) {
+// ADDED: Refactor parsing of the "[pid]/status" file
+std::string LinuxParser::pidStatusParser(const int pid, std::string _key) {
+  cout << "\npSP: seeking " << _key << " for pid: " << pid;
   std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatusFilename);
   if (stream.is_open()) {
     std::string line, key, value;

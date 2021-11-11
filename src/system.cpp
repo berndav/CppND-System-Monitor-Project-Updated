@@ -19,9 +19,6 @@ Processor& System::Cpu() { return cpu_; }
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() { return processes_; }
 
-//  Return the system's kernel identifier (string)
-std::string System::Kernel() { return m_kernel; }
-
 // TODO: Return the system's memory utilization
 float System::MemoryUtilization() { return 0.0; }
 
