@@ -16,7 +16,7 @@ using std::string;
 using std::vector;
 
 System::System(){
-    cout << "\nCreating System...\n";
+    //cout << "\nCreating System...\n";
     pids_ = Parser::Pids();
     for (int pid : pids_){
         Process new_process(pid);

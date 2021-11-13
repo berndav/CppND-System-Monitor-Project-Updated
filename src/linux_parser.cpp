@@ -90,13 +90,13 @@ string LinuxParser::OperatingSystem() {
 string LinuxParser::Kernel() {
   string os, version, kernel;
   string line;
-  std::ifstream stream(kProcDirectory + kVersionFilename);
-  if (stream.is_open()) {
-    std::getline(stream, line);
+  std::ifstream fileStream(kProcDirectory + kVersionFilename);
+  if (fileStream.is_open()) {
+    std::getline(fileStream, line);
     std::istringstream linestream(line);
     linestream >> os >> version >> kernel;
   }
-  stream.close();
+  fileStream.close();
   return kernel;
 }
 

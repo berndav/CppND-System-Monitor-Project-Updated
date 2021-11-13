@@ -9,7 +9,7 @@ Processor::Processor() {
     name_ = Parser::cpuinfoParser("model name");
     speed_ = Parser::cpuinfoParser("cpu MHz");
     numCores_ = Parser::cpuinfoParser("cpu cores");
-    std::cout << "Processor created\n";
+    //std::cout << "Processor created\n";
 }
 
 // TODO: Return the aggregate CPU utilization
