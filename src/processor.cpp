@@ -14,7 +14,8 @@ Processor::Processor() {
 
 // TODO: Return the aggregate CPU utilization
 float Processor::Utilization() {
-    std::vector<std::string> procStats = Parser::CpuUtilization();
+return 0.480;
+   /*  std::vector<std::string> procStats = Parser::CpuUtilization();
     int idleJiffies = 0;
     int totalJiffies = 0;
     const int idleColumn = 4;
@@ -25,9 +26,12 @@ float Processor::Utilization() {
             totalJiffies += std::stoi(procStats[i]);
         }
         idleJiffies = std::stoi(procStats[idleColumn]);
-        return 1 - (float(idleJiffies)/float(totalJiffies));
+        float result = 100 * (1 - (float(idleJiffies)/float(totalJiffies)));
+        std::cout << "CPU ute = " << result << "% \n";
+        return result;
     }
-    return 0.0; //error
+    std::cout << "CPU ute FAIL! \n";
+    return 0.0; //error */
     }
 
 

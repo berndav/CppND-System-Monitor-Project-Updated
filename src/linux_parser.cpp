@@ -94,18 +94,18 @@ return 100.0 * (std::stof(LinuxParser::meminfoParser("Active")) / std::stof(Linu
 }
 
 // DONE: Read and return the system uptime
-long LinuxParser::UpTime() {
-  std::ifstream stream(kProcDirectory + kUptimeFilename);
-  long uptime, idletime;
-  if (stream.is_open()) {
+long int LinuxParser::UpTime() {
+  std::ifstream fileStream(kProcDirectory + kUptimeFilename);
+  std::string uptime, idletime;
+  if (fileStream.is_open()) {
     std::string line;
-    std::getline(stream, line);
-    stream.close();
+    std::getline(fileStream, line);
+    fileStream.close();
     std::istringstream linestream(line);
     linestream >> uptime >> idletime;
-    return uptime;
+    return std::stoi(uptime);
   }
-  return -1.0;
+  return 0.0;
 }
 
 // BONUS: Update this to use std::filesystem
@@ -130,7 +130,7 @@ vector<int> LinuxParser::Pids() {
 
 // DONE: Read and return the total number of processes
 int LinuxParser::TotalProcesses() {
-  std::ifstream stream(kProcDirectory + kCpuinfoFilename);
+  std::ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
     std::string line;
     std::string label, data;
@@ -147,7 +147,7 @@ int LinuxParser::TotalProcesses() {
 
 // DONE: Read and return the number of running processes
 int LinuxParser::RunningProcesses() {
-  std::ifstream stream(kProcDirectory + kCpuinfoFilename);
+  std::ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
     std::string line;
     std::string label, data;
