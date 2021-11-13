@@ -6,6 +6,11 @@
 #include <string>
 
 namespace LinuxParser {
+// Utilities
+std::string cpuinfoParser(std::string key);
+std::string meminfoParser(std::string _key);
+std::string pidStatusParser(const int pid, std::string _key);
+
 // Paths
 const std::string kProcDirectory{"/proc/"};
 const std::string kCmdlineFilename{"/cmdline"};
@@ -20,7 +25,6 @@ const std::string kPasswordPath{"/etc/passwd"};
 
 // System
 float MemoryUtilization();
-std::string cpuinfoParser(std::string key);
 long UpTime();
 std::vector<int> Pids();
 int TotalProcesses();
@@ -41,6 +45,7 @@ enum CPUStates {
   kGuest_,
   kGuestNice_
 };
+
 std::vector<std::string> CpuUtilization();
 long Jiffies();
 long ActiveJiffies();
@@ -48,7 +53,6 @@ long ActiveJiffies(const int pid);
 long IdleJiffies();
 
 // Processes
-std::string pidStatusParser(const int pid, std::string _key);
 std::string Command(const int pid);
 std::string Ram(const int pid);
 std::string Uid(const int pid);

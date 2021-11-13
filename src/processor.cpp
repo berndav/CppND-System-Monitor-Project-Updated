@@ -19,7 +19,7 @@ float Processor::Utilization() {
     int totalJiffies = 0;
     const int idleColumn = 4;
     if (procStats[0] != "cpu")
-        return -1;
+        return 0.0;
     else{
         for (int i = 1; i < 10; i++){
             totalJiffies += std::stoi(procStats[i]);
@@ -27,7 +27,7 @@ float Processor::Utilization() {
         idleJiffies = std::stoi(procStats[idleColumn]);
         return 1 - (float(idleJiffies)/float(totalJiffies));
     }
-    return -1; //error
+    return 0.0; //error
     }
 
 
