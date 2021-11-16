@@ -34,7 +34,8 @@ std::string Kernel();
 
 // CPU
 enum CPUStates {
-  kUser_ = 0,
+  kCpu_ = 0,
+  kUser_,
   kNice_,
   kSystem_,
   kIdle_,
@@ -53,6 +54,17 @@ long ActiveJiffies(const int pid);
 long IdleJiffies();
 
 // Processes
+enum PidStatFields{
+  kPid = 0,
+  kCommand,
+  kState,
+  kUtime = 13,
+  kStime,
+  kCutime,
+  kCstime,
+  kStartTime = 22
+};
+
 std::string Command(const int pid);
 std::string Ram(const int pid);
 std::string Uid(const int pid);

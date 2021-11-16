@@ -16,7 +16,6 @@ using std::vector;
 
 // TODO: Constructor from pid
 Process::Process(int pid) : pid_(pid){
-    //cout << "Process: Constructing " << pid_ << "\n";
     user_ = Parser::User(pid_);
     command_ = Parser::Command(pid);
 }
@@ -32,7 +31,15 @@ string Process::Command() { return command_; }
 
 // DONE: Return this process's CPU utilization
 float Process::CpuUtilization() {
-    return float(Parser::ActiveJiffies(pid_) / Parser::ActiveJiffies()); }
+/*     const long int Hertz {sysconf(_SC_CLK_TCK)};
+    long int systemUptime = Parser::UpTime();
+    long int startTime = Parser::UpTime(pid_);
+    long int totalTime = Parser::ActiveJiffies(pid_);
+
+    return ((float(totalTime) / float(Hertz)) / float(systemUptime - startTime)); */
+
+    return 100 * (float(Parser::ActiveJiffies(pid_)) / float(Parser::ActiveJiffies()));
+}
 
 // DONE: Return this process's memory utilization
 string Process::Ram() { return Parser::Ram(pid_); }
