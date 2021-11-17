@@ -1,13 +1,13 @@
 #include <unistd.h>
+
 #include <cctype>
+#include <iostream>
 #include <sstream>
 #include <vector>
-
-#include <iostream>
 using std::cout;
 
-#include "process.h"
 #include "linux_parser.h"
+#include "process.h"
 namespace Parser = LinuxParser;
 
 using std::string;
@@ -15,9 +15,36 @@ using std::to_string;
 using std::vector;
 
 // TODO: Constructor from pid
-Process::Process(int pid) : pid_(pid){
-    user_ = Parser::User(pid_);
-    command_ = Parser::Command(pid);
+Process::Process(int pid) : pid_(pid) {
+  user_ = Parser::User(pid_);
+  command_ = Parser::Command(pid);
+}
+
+// Copy Constructor
+Process::Process(const Process& a)
+    : pid_(a.pid_),
+      user_(a.user_),
+      command_(a.command_),
+      lastProcJiffies_(a.lastProcJiffies_),
+      lastCpuJiffies_(a.lastCpuJiffies_) {}
+
+// Move constructor
+Process::Process(Process&& a) noexcept
+    : pid_(a.pid_),
+      user_(a.user_),
+      command_(a.command_),
+      lastProcJiffies_(a.lastProcJiffies_),
+      lastCpuJiffies_(a.lastCpuJiffies_) {}
+
+// Move assignment
+Process& Process::operator=(Process&& a) noexcept {
+  if (&a == this) return *this;
+  pid_ = a.pid_;
+  user_ = a.user_;
+  command_ = a.command_;
+  lastProcJiffies_ = a.lastProcJiffies_;
+  lastCpuJiffies_ = a.lastCpuJiffies_;
+  return *this;
 }
 
 // DONE: Return this process's ID
@@ -29,25 +56,31 @@ string Process::User() { return user_; }
 // DONE: Return the command that generated this process
 string Process::Command() { return command_; }
 
-// DONE: Return this process's CPU utilization
+// DONE: Return this process's CPU utilization as fraction
 float Process::CpuUtilization() {
-/*     const long int Hertz {sysconf(_SC_CLK_TCK)};
-    long int systemUptime = Parser::UpTime();
-    long int startTime = Parser::UpTime(pid_);
-    long int totalTime = Parser::ActiveJiffies(pid_);
+  long int currentProcjiffies = Parser::ActiveJiffies(pid_);
+  long int deltaProcJiffies = currentProcjiffies - lastProcJiffies_;
+  //cout << pid_ << ":\t";
+  //cout << currentProcjiffies << " - " << lastProcJiffies_ << " = " << deltaProcJiffies << " |\t";
+  lastProcJiffies_ = currentProcjiffies;
 
-    return ((float(totalTime) / float(Hertz)) / float(systemUptime - startTime)); */
+  long int currentCpuJiffies = Parser::Jiffies();
+  long int deltaCpuJiffies = currentCpuJiffies - lastCpuJiffies_;
+  //cout << currentCpuJiffies << " - " << lastCpuJiffies_ << " = " << deltaCpuJiffies << " \n ";
+  lastCpuJiffies_ = currentCpuJiffies;
 
-    return 100 * (float(Parser::ActiveJiffies(pid_)) / float(Parser::ActiveJiffies()));
+  if (deltaCpuJiffies <= 0) return 0.0;
+  //else
+  return float(deltaProcJiffies) / float(deltaCpuJiffies);
 }
 
 // DONE: Return this process's memory utilization
 string Process::Ram() { return Parser::Ram(pid_); }
 
-// DPNE: Return the age of this process (in seconds)
-long int Process::UpTime() { return Parser::UpTime(pid_); }
+// DONE: Return the age of this process (in seconds)
+long int Process::UpTime() { return Parser::UpTime() - Parser::UpTime(pid_); }
 
 // DONE: Overload the "less than" comparison operator for Process objects
-bool Process::operator<(Process const& a) const {
-    return (this->pid_ < a.pid_);
-    }
+bool Process::operator<(Process& a) {
+  return (this->CpuUtilization() > a.CpuUtilization());
+}

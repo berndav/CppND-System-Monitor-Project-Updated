@@ -59,9 +59,9 @@ enum PidStatFields{
   kCommand,
   kState,
   kUtime = 13,
-  kStime,
-  kCutime,
-  kCstime,
+  kStime = 14,
+  kCutime = 15,
+  kCstime = 16,
   kStartTime = 22
 };
 

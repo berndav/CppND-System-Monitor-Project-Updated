@@ -1,10 +1,10 @@
-#include <unistd.h>
-#include <cstddef>
-#include <set>
-
 #include "system.h"
 
+#include <unistd.h>
+
+#include <cstddef>
 #include <iostream>
+#include <set>
 using std::cout;
 
 #include "linux_parser.h"
@@ -15,15 +15,15 @@ using std::size_t;
 using std::string;
 using std::vector;
 
-System::System(){
-    //cout << "\nCreating System...\n";
-    pids_ = Parser::Pids();
-    for (int pid : pids_){
-        Process new_process(pid);
-        processes_.push_back(new_process);
-    }
-    kernel_ = Parser::Kernel();
-    OS_ = Parser::OperatingSystem();
+System::System() {
+  pids_ = Parser::Pids();
+  for (int pid : pids_) {
+    Process new_process(pid);
+    processes_.push_back(new_process);
+  }
+  sort();
+  kernel_ = Parser::Kernel();
+  OS_ = Parser::OperatingSystem();
 }
 
 // DONE: Return the system's CPU
@@ -32,10 +32,11 @@ Processor& System::Cpu() { return cpu_; }
 // DONE: Return a container composed of the system's processes
 vector<Process>& System::Processes() { return processes_; }
 
+// sort ultility for outside calling
+void System::sort() { std::sort(processes_.begin(), processes_.end()); }
+
 // TODO: Return the system's memory utilization
-float System::MemoryUtilization() {
-    return Parser::MemoryUtilization();
-}
+float System::MemoryUtilization() { return Parser::MemoryUtilization(); }
 
 // DONE: Return the number of seconds since the system started running
 long int System::UpTime() { return Parser::UpTime(); }
