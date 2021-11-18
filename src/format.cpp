@@ -5,7 +5,8 @@
 //Completed this helper function
 // INPUT: Long int measuring seconds
 // OUTPUT: HH:MM:SS
-std::string Format::ElapsedTime(long int seconds) { 
+std::string Format::ElapsedTime(long int seconds) {
+    if (seconds <= 0) return "00:00:00";
     int ss = seconds % 60;
     int minutes = (seconds - ss) / 60;
     int mm = minutes % 60;
