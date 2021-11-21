@@ -10,6 +10,7 @@ class Process {
  public:
   Process(int _pid);
   Process(const Process& a);    //Copy constructor
+  Process& operator=(Process& a); // Copy assignment
   Process(Process&& a) noexcept; // Move constructor
   Process& operator=(Process&& a) noexcept; //Move assignment
   int Pid();                   // DONE: initialized on constructor
@@ -20,13 +21,17 @@ class Process {
   long int UpTime();           // DONE: See src/process.cpp
   bool operator<(Process& a);  // DONE: See src/process.cpp
 
+  long int prActJiff(){return lastProcActiveJiffies_;};
+  long int cpuActJiff(){ return lastCpuJiffies_;};
+
   // DONE: Declare any necessary private members
  private:
   int pid_;
   std::string user_;
   std::string command_;
+  long int startTime_;  // in ticks
 
-  long int lastProcJiffies_;
+  long int lastProcActiveJiffies_;
   long int lastCpuJiffies_;
 };
 

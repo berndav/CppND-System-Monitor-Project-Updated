@@ -6,6 +6,8 @@ class Processor {
  public:
     Processor();
     float Utilization();
+
+    // Accessors
     std::string Vendor();
     std::string Name();
     std::string Speed();
@@ -13,6 +15,9 @@ class Processor {
 
   // TODO: Declare any necessary private members
  private:
+ long int prevActive_;
+ long int prevTotal_;
+
  std::string vendor_;
  std::string name_;
  std::string speed_;

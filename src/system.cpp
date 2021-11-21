@@ -21,7 +21,6 @@ System::System() {
     Process new_process(pid);
     processes_.push_back(new_process);
   }
-  sort();
   kernel_ = Parser::Kernel();
   OS_ = Parser::OperatingSystem();
 }
@@ -39,7 +38,7 @@ void System::sort() { std::sort(processes_.begin(), processes_.end()); }
 float System::MemoryUtilization() { return Parser::MemoryUtilization(); }
 
 // DONE: Return the number of seconds since the system started running
-long int System::UpTime() { return Parser::UpTime(); }
+long int System::UpTime() { return Parser::UpTime() / sysconf(_SC_CLK_TCK); }
 
 // DONE: Return the total number of processes on the system
 int System::TotalProcesses() { return Parser::TotalProcesses(); }

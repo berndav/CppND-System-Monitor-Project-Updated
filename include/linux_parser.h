@@ -62,13 +62,14 @@ enum PidStatFields{
   kStime = 14,
   kCutime = 15,
   kCstime = 16,
-  kStartTime = 22
+  kStartTime = 21
 };
 
 std::string Command(const int pid);
 std::string Ram(const int pid);
 std::string Uid(const int pid);
 std::string User(const int pid);
+long int StartTime(const int pid);
 long int UpTime(const int pid);
 };  // namespace LinuxParser
 

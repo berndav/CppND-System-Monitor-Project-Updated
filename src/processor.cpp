@@ -1,3 +1,4 @@
+
 #include "processor.h"
 #include "linux_parser.h"
 
@@ -13,8 +14,18 @@ Processor::Processor() {
 }
 
 // TODO: Return the aggregate CPU utilization
+//UPDATED: Now shows current usage updated withdiplay update
 float Processor::Utilization() {
-    return float(Parser::ActiveJiffies()) / float(Parser::Jiffies());
+    long int currTotal = Parser::Jiffies();
+    long int deltaTotal = currTotal - prevTotal_;
+    prevTotal_ = currTotal;
+
+    long int currActive = Parser::ActiveJiffies();
+    long int deltaActive = currActive - prevActive_;
+    prevActive_ = currActive;
+
+    float cpuUtilization = float (deltaActive) / float (deltaTotal);
+    return cpuUtilization;
     }
 
 
