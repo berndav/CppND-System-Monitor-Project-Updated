@@ -18,8 +18,8 @@ using std::vector;
 System::System() {
   pids_ = Parser::Pids();
   for (int pid : pids_) {
-    Process new_process(pid);
-    processes_.push_back(new_process);
+    //Process new_process(pid);
+    processes_.push_back(pid);
   }
   kernel_ = Parser::Kernel();
   OS_ = Parser::OperatingSystem();

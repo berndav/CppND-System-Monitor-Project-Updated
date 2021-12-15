@@ -24,6 +24,9 @@ const string pidStatusName {"Name"};
 const string pidStatusVmSize {"VmSize"};
 const string pidStatusUid {"Uid"};
 
+const string statTotalProcesses {"processes"};
+const string statRunningProcesses {"procs_running"};
+
 // Paths
 const string kProcDirectory{"/proc/"};
 const string kCmdlineFilename{"/cmdline"};
