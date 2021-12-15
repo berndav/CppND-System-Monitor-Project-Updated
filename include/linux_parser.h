@@ -5,23 +5,36 @@
 #include <regex>
 #include <string>
 
+using std::string;
+
 namespace LinuxParser {
 // Utilities
-std::string cpuinfoParser(std::string key);
-std::string meminfoParser(std::string _key);
-std::string pidStatusParser(const int pid, std::string _key);
+string cpuinfoParser(string key);
+string meminfoParser(string _key);
+string pidStatusParser(const int pid, string _key);
+
+// Key Values
+
+const string meminfoActive {"Active"};
+const string meminfoMemTotal {"MemTotal"};
+const string meminfoMemFree {"MemFree"};
+
+
+const string pidStatusName {"Name"};
+const string pidStatusVmSize {"VmSize"};
+const string pidStatusUid {"Uid"};
 
 // Paths
-const std::string kProcDirectory{"/proc/"};
-const std::string kCmdlineFilename{"/cmdline"};
-const std::string kCpuinfoFilename{"/cpuinfo"};
-const std::string kStatusFilename{"/status"};
-const std::string kStatFilename{"/stat"};
-const std::string kUptimeFilename{"/uptime"};
-const std::string kMeminfoFilename{"/meminfo"};
-const std::string kVersionFilename{"/version"};
-const std::string kOSPath{"/etc/os-release"};
-const std::string kPasswordPath{"/etc/passwd"};
+const string kProcDirectory{"/proc/"};
+const string kCmdlineFilename{"/cmdline"};
+const string kCpuinfoFilename{"/cpuinfo"};
+const string kStatusFilename{"/status"};
+const string kStatFilename{"/stat"};
+const string kUptimeFilename{"/uptime"};
+const string kMeminfoFilename{"/meminfo"};
+const string kVersionFilename{"/version"};
+const string kOSPath{"/etc/os-release"};
+const string kPasswordPath{"/etc/passwd"};
 
 // System
 float MemoryUtilization();
@@ -29,8 +42,8 @@ long int UpTime();
 std::vector<int> Pids();
 int TotalProcesses();
 int RunningProcesses();
-std::string OperatingSystem();
-std::string Kernel();
+string OperatingSystem();
+string Kernel();
 
 // CPU
 enum CPUStates {
@@ -47,7 +60,7 @@ enum CPUStates {
   kGuestNice_
 };
 
-std::vector<std::string> CpuUtilization();
+std::vector<string> CpuUtilization();
 long Jiffies();
 long ActiveJiffies();
 long ActiveJiffies(const int pid);
@@ -65,10 +78,10 @@ enum PidStatFields{
   kStartTime = 21
 };
 
-std::string Command(const int pid);
-std::string Ram(const int pid);
-std::string Uid(const int pid);
-std::string User(const int pid);
+string Command(const int pid);
+string Ram(const int pid);
+string Uid(const int pid);
+string User(const int pid);
 long int StartTime(const int pid);
 long int UpTime(const int pid);
 };  // namespace LinuxParser

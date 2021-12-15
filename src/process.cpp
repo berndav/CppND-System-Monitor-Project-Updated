@@ -72,7 +72,15 @@ int Process::Pid() { return pid_; }
 string Process::User() { return user_; }
 
 // DONE: Return the command that generated this process
-string Process::Command() { return command_; }
+string Process::Command() {
+  string commandString = command_;
+  if(commandString.size() > 50){
+    commandString.resize(50);
+    commandString += "...";
+  }
+  
+  return commandString;
+}
 
 // DONE: Return this process's CPU utilization as FRACTION of total CPU time.
 // ncurses_display::DisplayProcesses multiplies by 100 to get percent.
